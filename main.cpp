@@ -11,21 +11,11 @@
 
 
 
-void reset_puzzle(puzzle_game::puzzle& puzzle,int divisor_add=0){
-    puzzle.increase_divisor(divisor_add);
-    puzzle_game::util::setup_window(*puzzle.img,puzzle.current_divisor);
-    puzzle.reset();
-}
-
-
-
-
-
 
 void handle_global_keypresses(puzzle_game::puzzle& puzzle){
     //restart, increase division
     if(IsKeyReleased(KEY_F4)){
-        reset_puzzle(puzzle,2);
+        puzzle.increase_divisor(2);
     }
     //restart, keep division
     if(IsKeyReleased(KEY_SPACE)){

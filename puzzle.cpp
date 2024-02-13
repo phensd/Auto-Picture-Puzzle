@@ -164,8 +164,8 @@ void puzzle_game::puzzle::shuffle(){
 void puzzle_game::puzzle::set_image(Image image){
 
     img = &image;
-    puzzle_game::util::conform_image(*img);
-    puzzle_game::util::setup_window(*img);
+    puzzle_game::util::conform_image(img);
+    puzzle_game::util::setup_window(img);
     puzzle_game::util::set_window_icon(ImageCopy(*img));
 
     reset();
@@ -232,6 +232,8 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
 void puzzle_game::puzzle::increase_divisor(int add){
     current_divisor += add;
     if(current_divisor > MAX_DIVISOR) current_divisor = MIN_DIVISOR;
+    puzzle_game::util::setup_window(img,current_divisor);
+    reset();
 }
 
 puzzle_game::puzzle::puzzle(){
