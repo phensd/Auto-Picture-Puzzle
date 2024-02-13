@@ -5,7 +5,6 @@
 namespace puzzle_game::util{
 
     void setup_window(const Image* puzzle_image,int divisor){
-        std::cout << puzzle_image->width << " "<< puzzle_image->height << std::endl;
         //images cant store floating point values
         //so have to make sure window compensates for inevitable loss
         int wwidth {(puzzle_image->width - (puzzle_image->width/divisor*divisor))};

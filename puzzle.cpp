@@ -167,6 +167,8 @@ void puzzle_game::puzzle::set_image(Image* image){
 
     puzzle_game::util::setup_window(&img,current_divisor);
     puzzle_game::util::set_window_icon(ImageCopy(*image));
+    modif_img = util::conform_image(&img);
+
 
     reset();
 
@@ -186,7 +188,6 @@ void puzzle_game::puzzle::reset(){
 
     ptr_last_piece = nullptr;
 
-    modif_img = util::conform_image(&img);
     puzzle_game::util::setup_window(&modif_img,current_divisor);
 
     //Unload all images associated with pieces
@@ -234,7 +235,6 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
         }
     }
 
-    UnloadImage(modif_img);
 
 }
 
