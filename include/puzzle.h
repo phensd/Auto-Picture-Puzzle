@@ -22,12 +22,10 @@ namespace puzzle_game {
 
 
 
-            ~puzzle();
             
             puzzle(const puzzle&) = delete;
             puzzle& operator=(const puzzle&) = delete;
-
-            puzzle(Image* img) : img{img}{}
+            puzzle();
 
         private:
             const int MIN_DIVISOR{4};

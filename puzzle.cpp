@@ -131,7 +131,7 @@ std::vector<puzzle_game::puzzle_piece*> puzzle_game::puzzle::neighbours_of_last_
 }
 
 
-//usd to scramble puzzle
+//used to scramble puzzle
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_rand_neighbour_of_last_piece(){
     puzzle_piece* choice = nullptr;
     while(choice == nullptr){
@@ -162,6 +162,9 @@ void puzzle_game::puzzle::shuffle(){
 }
 
 void puzzle_game::puzzle::set_image(Image image){
+    //if an image is already set, unload it
+    if(this->img) UnloadImage(*this->img);
+
     img = &image;
     puzzle_game::util::conform_image(*img);
     puzzle_game::util::setup_window(*img);
@@ -234,7 +237,6 @@ void puzzle_game::puzzle::increase_divisor(int add){
     if(current_divisor > MAX_DIVISOR) current_divisor = MIN_DIVISOR;
 }
 
-puzzle_game::puzzle::~puzzle(){
-    UnloadImage(*img);
-    std::cerr << "puzzle deleted \n";
+puzzle_game::puzzle::puzzle(){
+
 }
