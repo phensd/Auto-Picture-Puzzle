@@ -167,7 +167,7 @@ void puzzle_game::puzzle::shuffle(){
 
     //pick a random neighbor of the last piece than swap them, to shuffle
     auto size = pieces.size();
-    for(int i = 0; i < static_cast<int>(1); ++i){
+    for(int i = 0; i < static_cast<int>(size*size); ++i){
       ptr_last_piece->swap(ptr_rand_neighbour_of_last_piece());
 
     }
