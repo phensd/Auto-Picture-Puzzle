@@ -1,15 +1,13 @@
 cmake_minimum_required(VERSION 3.15)
 project(PicturePuzzle)
 
-find_package(raylib 3.0 REQUIRED)
 
 add_executable(PicturePuzzle main.cpp puzzle.cpp puzzle_piece.cpp util.cpp)
 
-
-
 target_include_directories(PicturePuzzle PRIVATE include)
 
-target_link_libraries(PicturePuzzle PRIVATE raylib)
+#link with static raylib
+target_link_libraries(PicturePuzzle PRIVATE raylib.a)
 
 
 

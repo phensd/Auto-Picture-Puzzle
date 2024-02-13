@@ -5,6 +5,8 @@
 
 namespace puzzle_game::util{
 
+    //Set up the window, taking into account that dividing an image into smaller pieces
+    //will cause some floating point imprecision, (atleast in the formats that raylib supports?)
     void setup_window(const Image* puzzle_image,int divisor){
         //images cant store floating point values
         //so have to make sure window compensates for inevitable loss
@@ -14,8 +16,8 @@ namespace puzzle_game::util{
 
     }
 
+    //Resize image to be atleast a bit smaller than the user's monitor
     Image conform_image(Image* image){
-        //awk to read
         Image return_image {ImageCopy(*image)};
         const int USER_MONITOR_HEIGHT = GetMonitorHeight(GetCurrentMonitor());
         const int USER_MONITOR_WIDTH = GetMonitorWidth(GetCurrentMonitor());
@@ -34,6 +36,7 @@ namespace puzzle_game::util{
         UnloadImage(image);
     }
 
+    //Set the window title, "include_info" adds some information about keybindings
     void set_window_title(std::string title, bool include_info){
 
         //add brackets to the first entry

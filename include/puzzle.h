@@ -22,6 +22,9 @@ namespace puzzle_game {
             void shuffle();
 
             bool has_an_image() {return has_image;}
+            std::string& image_file_path_get() {return file_path_for_title;}
+            bool is_filled_in_after_completion();
+
 
             
             puzzle(const puzzle&) = delete;
@@ -43,10 +46,11 @@ namespace puzzle_game {
             puzzle_piece* ptr_rand_neighbour_of_last_piece();
 
             bool is_solved();
-            bool is_filled_in_after_completion();
             bool has_image {false};
             void handle_mouse_hover(const Vector2& mouse_pos);
             void handle_mouse_clicks(const Vector2& mouse_pos);
+
+            std::string file_path_for_title;
 
             std::vector<puzzle_piece> correct_order_of_pieces{};
             std::vector<puzzle_piece> current_order_of_pieces{};
