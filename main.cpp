@@ -5,39 +5,21 @@
 #include <vector>
 #include "include/puzzle.h"
 #include <sstream>
+#include "include/util.h"
 
 
 
-
-void setup_window(Image& puzzle_image,int divisor=4){
-
-    //images cant store floating point values
-    //so have to make sure window compensates for inevitable loss 
-    int wwidth {(puzzle_image.width - (puzzle_image.width/divisor*divisor))};
-    int hheight {(puzzle_image.height - (puzzle_image.height/divisor*divisor))};
-    SetWindowSize(puzzle_image.width - wwidth, puzzle_image.height - hheight);
-
-}
 
 
 void reset_puzzle(puzzle_game::puzzle& puzzle,int divisor_add=0){
     puzzle.increase_divisor(divisor_add);
-    setup_window(*puzzle.img,puzzle.current_divisor);
+    puzzle_game::util::setup_window(*puzzle.img,puzzle.current_divisor);
     puzzle.reset();
 }
 
 
 
-void conform_image(Image& image){
-    //awk to read
-    const int USER_MONITOR_HEIGHT = GetMonitorHeight(GetCurrentMonitor());
-    const int USER_MONITOR_WIDTH = GetMonitorWidth(GetCurrentMonitor());
-    while(image.height >= USER_MONITOR_HEIGHT-puzzle_game::constants::FORCED_FREE_SPACE_ON_MONITOR or
-     image.width >= USER_MONITOR_WIDTH-puzzle_game::constants::FORCED_FREE_SPACE_ON_MONITOR) {
-        ImageResize(&image,image.width*0.90,image.height*0.90);
-    }
 
-}
 
 
 void handle_global_keypresses(puzzle_game::puzzle& puzzle){
@@ -53,19 +35,24 @@ void handle_global_keypresses(puzzle_game::puzzle& puzzle){
 }
 
 
-//pbv intentional for copy
-void set_window_icon(Image image){
-
-    ImageResize(&image,256,256);
-    SetWindowIcon(image);
-
-}
-
-
 Image get_image(const char* image_path){
     return LoadImage(image_path);
 }
 
+void handle_image_drop(puzzle_game::puzzle& puzzle){
+    auto files {LoadDroppedFiles()};
+    try{
+        Image image {LoadImage(files.paths[0])};
+        puzzle.img = &image;
+        puzzle.init();
+    }catch(std::exception& e){
+
+        e.what();
+    }
+
+    UnloadDroppedFiles(files);
+
+}
 
 int main(int argc, [[maybe_unused]]char* argv[]){
     assert(argc > 1 && "You have to drag and drop an image into the executable directly!");
@@ -76,10 +63,7 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
     Image puzzle_image{get_image(argv[1])};
     
-    conform_image(puzzle_image);
-    setup_window(puzzle_image);
-    //dont know why i have to make a copy when i pbv..?
-    set_window_icon(ImageCopy(puzzle_image));
+
 
     puzzle_game::puzzle puzzle{&puzzle_image};
     puzzle.init();
@@ -93,6 +77,8 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
 
     while (!WindowShouldClose()){
+        if(IsFileDropped()) handle_image_drop(puzzle);
+
         handle_global_keypresses(puzzle);
         BeginDrawing();
         puzzle.draw();

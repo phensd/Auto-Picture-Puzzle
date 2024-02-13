@@ -3,7 +3,7 @@ project(PicturePuzzle)
 
 find_package(raylib 3.0 REQUIRED)
 
-add_executable(PicturePuzzle main.cpp puzzle.cpp puzzle_piece.cpp)
+add_executable(PicturePuzzle main.cpp puzzle.cpp puzzle_piece.cpp util.cpp)
 
 
 

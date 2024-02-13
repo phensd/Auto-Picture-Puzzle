@@ -9,6 +9,7 @@
 #include <raymath.h>
 #include "include/constants.h"
 #include <cmath>
+#include "include/util.h"
 
 
 
@@ -161,6 +162,11 @@ void puzzle_game::puzzle::shuffle(){
 }
 
 void puzzle_game::puzzle::init(){
+
+    puzzle_game::util::conform_image(*img);
+    puzzle_game::util::setup_window(*img);
+    //dont know why i have to make a copy when i pbv..?
+    puzzle_game::util::set_window_icon(ImageCopy(*img));
     
     fill_list_with_pieces(correct_order_of_pieces);
     current_order_of_pieces = correct_order_of_pieces;
@@ -169,27 +175,31 @@ void puzzle_game::puzzle::init(){
 
 }
 
-//not how i should handle unloading but its the only way that works
-//dont know why
-//first project rough lol
 void puzzle_game::puzzle::reset(){
 
     ptr_last_piece = nullptr;
     
+    //Unload all images associated with pieces
+    //(I tried to do this in a RAII way but
+    //failed horribly. I have no clue how image loading
+    //and unloading works behind the scenes, but I dont get it.)
     for(auto& p : correct_order_of_pieces){
         UnloadTexture(p.img);
     }
     for(auto& p : current_order_of_pieces){
         UnloadTexture(p.img);
     }
+
     current_order_of_pieces.clear();
     correct_order_of_pieces.clear();
     this->init();
 }
 
+
 void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_piece>& list){
     int& divisor {current_divisor};
     auto& image {*img};
+    list.reserve(static_cast<size_t>(current_divisor*current_divisor));
 
 
     for(int y = 0; y < divisor; ++y){
@@ -204,9 +214,7 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
             UnloadImage(cropped_img);
             
 
-            //less copying
-            list.reserve(static_cast<size_t>(current_divisor*current_divisor));
-            list.emplace_back(puzzle_piece{pos,puzzle_piece_img,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y}});
+            list.emplace_back(pos,puzzle_piece_img,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y});
             
 
 
