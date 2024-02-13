@@ -33,7 +33,7 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
     auto files {LoadDroppedFiles()};
     try{
         Image image {LoadImage(files.paths[0])};
-        puzzle.set_image(image);
+        puzzle.set_image(&image);
     }catch(std::exception& e){
 
         e.what();
@@ -56,7 +56,7 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
     puzzle_game::puzzle puzzle{};
 
-    puzzle.set_image(puzzle_image);
+    puzzle.set_image(&puzzle_image);
 
 
 

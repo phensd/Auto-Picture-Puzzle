@@ -9,10 +9,11 @@ namespace puzzle_game {
 
 
         public:
-            Image* img{nullptr};
+            Image img;
+            Image modif_img;
             std::vector<puzzle_piece>& get_pieces();
             void init();
-            void set_image(Image image);
+            void set_image(Image* image);
             void reset();
             void update();
             void draw();

@@ -161,14 +161,15 @@ void puzzle_game::puzzle::shuffle(){
 
 }
 
-void puzzle_game::puzzle::set_image(Image image){
+void puzzle_game::puzzle::set_image(Image* image){
 
-    img = &image;
-    puzzle_game::util::conform_image(img);
-    puzzle_game::util::setup_window(img);
-    puzzle_game::util::set_window_icon(ImageCopy(*img));
+    img = ImageCopy(*image);
+
+    puzzle_game::util::setup_window(&img,current_divisor);
+    puzzle_game::util::set_window_icon(ImageCopy(*image));
 
     reset();
+
 }
 
 void puzzle_game::puzzle::init(){
@@ -184,7 +185,10 @@ void puzzle_game::puzzle::init(){
 void puzzle_game::puzzle::reset(){
 
     ptr_last_piece = nullptr;
-    
+
+    modif_img = util::conform_image(&img);
+    puzzle_game::util::setup_window(&modif_img,current_divisor);
+
     //Unload all images associated with pieces
     //(I tried to do this in a RAII way but
     //failed horribly. I have no clue how image loading
@@ -204,18 +208,21 @@ void puzzle_game::puzzle::reset(){
 
 void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_piece>& list){
     int& divisor {current_divisor};
-    auto& image {*img};
+
+
+
+
     list.reserve(static_cast<size_t>(current_divisor*current_divisor));
 
 
     for(int y = 0; y < divisor; ++y){
         for(int x = 0; x < divisor; ++x){
 
-            Vector2 dist {static_cast<float>(image.width/divisor),static_cast<float>(image.height/divisor)};
+            Vector2 dist {static_cast<float>(modif_img.width/divisor),static_cast<float>(modif_img.height/divisor)};
             Vector2 pos  {x*dist.x,y*dist.y};
-            Vector2 dimensions  {static_cast<float>(image.width/divisor),static_cast<float>(image.height/divisor)};
+            Vector2 dimensions  {static_cast<float>(modif_img.width/divisor),static_cast<float>(modif_img.height/divisor)};
 
-            Image cropped_img {ImageFromImage(image,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y})};
+            Image cropped_img {ImageFromImage(modif_img,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y})};
             Texture2D puzzle_piece_img {LoadTextureFromImage(cropped_img)};
             UnloadImage(cropped_img);
             
@@ -227,12 +234,13 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
         }
     }
 
+    UnloadImage(modif_img);
+
 }
 
 void puzzle_game::puzzle::increase_divisor(int add){
     current_divisor += add;
     if(current_divisor > MAX_DIVISOR) current_divisor = MIN_DIVISOR;
-    puzzle_game::util::setup_window(img,current_divisor);
     reset();
 }
 
