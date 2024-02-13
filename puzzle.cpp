@@ -162,16 +162,13 @@ void puzzle_game::puzzle::shuffle(){
 }
 
 void puzzle_game::puzzle::set_image(Image image){
-    //if an image is already set, unload it
-    if(this->img) UnloadImage(*this->img);
 
     img = &image;
     puzzle_game::util::conform_image(*img);
     puzzle_game::util::setup_window(*img);
     puzzle_game::util::set_window_icon(ImageCopy(*img));
 
-    init();
-
+    reset();
 }
 
 void puzzle_game::puzzle::init(){
