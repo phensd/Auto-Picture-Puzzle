@@ -165,9 +165,10 @@ void puzzle_game::puzzle::set_image(Image* image){
 
     img = ImageCopy(*image);
 
-    puzzle_game::util::setup_window(&img,current_divisor);
-    puzzle_game::util::set_window_icon(ImageCopy(*image));
     modif_img = util::conform_image(&img);
+    puzzle_game::util::setup_window(&modif_img,current_divisor);
+    puzzle_game::util::set_window_icon(ImageCopy(*image));
+
 
 
     reset();
@@ -188,7 +189,6 @@ void puzzle_game::puzzle::reset(){
 
     ptr_last_piece = nullptr;
 
-    puzzle_game::util::setup_window(&modif_img,current_divisor);
 
     //Unload all images associated with pieces
     //(I tried to do this in a RAII way but
@@ -241,6 +241,7 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
 void puzzle_game::puzzle::increase_divisor(int add){
     current_divisor += add;
     if(current_divisor > MAX_DIVISOR) current_divisor = MIN_DIVISOR;
+    puzzle_game::util::setup_window(&modif_img,current_divisor);
     reset();
 }
 
