@@ -161,12 +161,18 @@ void puzzle_game::puzzle::shuffle(){
 
 }
 
-void puzzle_game::puzzle::init(){
-
+void puzzle_game::puzzle::set_image(Image image){
+    img = &image;
     puzzle_game::util::conform_image(*img);
     puzzle_game::util::setup_window(*img);
-    //dont know why i have to make a copy when i pbv..?
     puzzle_game::util::set_window_icon(ImageCopy(*img));
+
+    init();
+
+}
+
+void puzzle_game::puzzle::init(){
+
     
     fill_list_with_pieces(correct_order_of_pieces);
     current_order_of_pieces = correct_order_of_pieces;

@@ -12,6 +12,7 @@ namespace puzzle_game {
             Image* img{nullptr};
             std::vector<puzzle_piece>& get_pieces();
             void init();
+            void set_image(Image image);
             void reset();
             void update();
             void draw();
