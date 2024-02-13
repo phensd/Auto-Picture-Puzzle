@@ -72,10 +72,14 @@ int main(int argc, [[maybe_unused]]char* argv[]){
             handle_global_keypresses(puzzle);
             puzzle.draw();
             puzzle.update();
+            //Gray is less common for what I assume people would use this for
+            //so we clear with gray here, but
+            ClearBackground(GRAY);
         }else {
             DrawText("Drag and drop and image here to start!",30,330,38,BLACK);
+            //white here because its better for the text.
+            ClearBackground(WHITE);
         }
-        ClearBackground(WHITE);
         EndDrawing();
     }
     CloseWindow();
