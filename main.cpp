@@ -68,11 +68,14 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
         BeginDrawing();
         if(puzzle.has_an_image()){
+
             handle_global_keypresses(puzzle);
             puzzle.draw();
             puzzle.update();
+        }else {
+            DrawText("Drag and drop and image here to start!",30,330,38,BLACK);
         }
-        ClearBackground(GRAY);
+        ClearBackground(WHITE);
         EndDrawing();
     }
     CloseWindow();
