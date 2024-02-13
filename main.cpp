@@ -36,7 +36,6 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
         puzzle.set_image(&image);
         UnloadImage(image);
     }catch(std::exception& e){
-
         e.what();
     }
 
@@ -45,19 +44,22 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
 }
 
 int main(int argc, [[maybe_unused]]char* argv[]){
-    assert(argc > 1 && "You have to drag and drop an image into the executable directly!");
 
-    InitWindow(800,800,argv[1]);
+    InitWindow(800,800,"Drag and drop an image into the window to start!");
     SetTargetFPS(144);
-
-
-    Image puzzle_image{get_image(argv[1])};
-    
-
 
     puzzle_game::puzzle puzzle{};
 
-    puzzle.set_image(&puzzle_image);
+
+    if(argc > 1){
+        Image image {LoadImage(argv[1])};
+        puzzle.set_image(&image);
+        UnloadImage(image);
+    }
+    
+
+
+
 
 
 
@@ -70,10 +72,12 @@ int main(int argc, [[maybe_unused]]char* argv[]){
     while (!WindowShouldClose()){
         if(IsFileDropped()) handle_image_drop(puzzle);
 
-        handle_global_keypresses(puzzle);
         BeginDrawing();
-        puzzle.draw();
-        puzzle.update();
+        if(puzzle.has_an_image()){
+            handle_global_keypresses(puzzle);
+            puzzle.draw();
+            puzzle.update();
+        }
         ClearBackground(GRAY);
         EndDrawing();
     }

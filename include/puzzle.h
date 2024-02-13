@@ -21,7 +21,7 @@ namespace puzzle_game {
             int current_divisor{4};
             void shuffle();
 
-
+            bool has_an_image() {return has_image;}
 
             
             puzzle(const puzzle&) = delete;
@@ -44,6 +44,7 @@ namespace puzzle_game {
 
             bool is_solved();
             bool is_filled_in_after_completion();
+            bool has_image {false};
             void handle_mouse_hover(const Vector2& mouse_pos);
             void handle_mouse_clicks(const Vector2& mouse_pos);
 

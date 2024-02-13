@@ -163,9 +163,10 @@ void puzzle_game::puzzle::shuffle(){
 
 void puzzle_game::puzzle::set_image(Image* image){
 
-    UnloadImage(img);
+    if(has_image) UnloadImage(img);
 
     img = ImageCopy(*image);
+    has_image = true;
 
     modif_img = util::conform_image(&img);
     puzzle_game::util::setup_window(&modif_img,current_divisor);
