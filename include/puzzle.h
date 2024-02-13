@@ -2,7 +2,7 @@
 #include "puzzle_piece.h"
 #include <raylib.h>
 #include <vector>
-
+#include <string>
 
 namespace puzzle_game {
     struct puzzle{
@@ -13,7 +13,7 @@ namespace puzzle_game {
             Image modif_img;
             std::vector<puzzle_piece>& get_pieces();
             void init();
-            void set_image(Image* image);
+            void set_image(Image* image, std::string file_path_for_title);
             void reset();
             void update();
             void draw();

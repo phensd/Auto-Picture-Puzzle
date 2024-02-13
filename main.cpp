@@ -33,7 +33,7 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
     auto files {LoadDroppedFiles()};
     try{
         Image image {LoadImage(files.paths[0])};
-        puzzle.set_image(&image);
+        puzzle.set_image(&image,files.paths[0]);
         UnloadImage(image);
     }catch(std::exception& e){
         e.what();
@@ -45,7 +45,7 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
 
 int main(int argc, [[maybe_unused]]char* argv[]){
 
-    InitWindow(800,800,"Drag and drop an image into the window to start!");
+    InitWindow(800,800,"[Auto Picture Puzzle]");
     SetTargetFPS(144);
 
     puzzle_game::puzzle puzzle{};
@@ -53,16 +53,10 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
     if(argc > 1){
         Image image {LoadImage(argv[1])};
-        puzzle.set_image(&image);
+        puzzle.set_image(&image,argv[1]);
         UnloadImage(image);
     }
     
-
-
-
-
-
-
 
 
     

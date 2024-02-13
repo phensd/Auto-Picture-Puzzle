@@ -1,6 +1,7 @@
 #include "include/util.h"
 #include "include/constants.h"
 #include <iostream>
+#include <format>
 
 namespace puzzle_game::util{
 
@@ -31,6 +32,24 @@ namespace puzzle_game::util{
         SetWindowIcon(image);
 
         UnloadImage(image);
+    }
+
+    void set_window_title(std::string title, bool include_info){
+
+        //add brackets to the first entry
+        title.insert(0,"[");
+        title += "]";
+
+
+        //add some space for anything that gets appended
+        title += " ";
+
+        if(include_info){
+            std::string info_string {"[F4] Increase Difficulty | [Spacebar] Scramble Puzzle"};
+            title += info_string;
+        }
+
+        SetWindowTitle(title.c_str());
     }
 
 }

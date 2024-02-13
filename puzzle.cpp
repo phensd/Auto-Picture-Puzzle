@@ -12,7 +12,6 @@
 #include "include/util.h"
 
 
-
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_above(const puzzle_piece* piece){
     return ptr_piece_at(current_order_of_pieces,Vector2{piece->pos.x,piece->pos.y-piece->bounding_box.height});
 }
@@ -161,7 +160,9 @@ void puzzle_game::puzzle::shuffle(){
 
 }
 
-void puzzle_game::puzzle::set_image(Image* image){
+void puzzle_game::puzzle::set_image(Image* image,std::string file_path_for_title){
+
+    puzzle_game::util::set_window_title("Loading image...");
 
     if(has_image) UnloadImage(img);
 
@@ -175,6 +176,12 @@ void puzzle_game::puzzle::set_image(Image* image){
 
 
     reset();
+
+    puzzle_game::util::set_window_title(file_path_for_title,true);
+
+
+
+
 
 
 
