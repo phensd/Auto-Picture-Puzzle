@@ -34,6 +34,7 @@ void handle_image_drop(puzzle_game::puzzle& puzzle){
     try{
         Image image {LoadImage(files.paths[0])};
         puzzle.set_image(&image);
+        UnloadImage(image);
     }catch(std::exception& e){
 
         e.what();

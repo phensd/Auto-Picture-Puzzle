@@ -163,6 +163,8 @@ void puzzle_game::puzzle::shuffle(){
 
 void puzzle_game::puzzle::set_image(Image* image){
 
+    UnloadImage(img);
+
     img = ImageCopy(*image);
 
     modif_img = util::conform_image(&img);
@@ -172,6 +174,8 @@ void puzzle_game::puzzle::set_image(Image* image){
 
 
     reset();
+
+
 
 }
 

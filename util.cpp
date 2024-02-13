@@ -29,6 +29,8 @@ namespace puzzle_game::util{
     void set_window_icon(Image image){
         ImageResize(&image,256,256);
         SetWindowIcon(image);
+
+        UnloadImage(image);
     }
 
 }
