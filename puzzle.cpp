@@ -114,14 +114,23 @@ void puzzle_game::puzzle::update(){
 
 void puzzle_game::puzzle::draw(){
 
+
     for(auto& p : current_order_of_pieces){
         DrawTexture(p.img,p.pos.x,p.pos.y,WHITE);
 
         //if the puzzle isnt solved, draw a soft border around each piece
         if(!is_filled_in_after_completion()){
             DrawRectangleLinesEx(Rectangle{p.pos.x,p.pos.y,static_cast<float>(p.img.width),static_cast<float>(p.img.height)},puzzle_game::constants::PUZZLE_PIECE_BORDER_THICKNESS,BLACK);
+
+
         }
     }
+
+    //if the user if holding control show them the image they are tryin to piece together
+    if(IsKeyDown(KEY_LEFT_CONTROL)){
+        DrawTexture(modif_img_as_texture,0,0,WHITE);
+    }
+
 }
 
 std::vector<puzzle_game::puzzle_piece>& puzzle_game::puzzle::get_pieces(){
@@ -185,6 +194,7 @@ void puzzle_game::puzzle::set_image(Image* image,std::string file_path_for_title
     if(has_image) {
         UnloadImage(img);
         UnloadImage(modif_img);
+        UnloadTexture(modif_img_as_texture);
     }
 
     //save the file path in a string for the title bar
@@ -201,6 +211,10 @@ void puzzle_game::puzzle::set_image(Image* image,std::string file_path_for_title
 
     //set the window size to be roughly what it should be after rounding is considered
     puzzle_game::util::setup_window(&modif_img,current_divisor);
+
+    //Load the original image as a texture so the player can look at the original image for referencing their progress
+    //This wont count for the slight precision loss like the pieces(?) but it should be good enough and not noticeable (I hope?)
+    modif_img_as_texture = LoadTextureFromImage(modif_img);
 
     //puzzle_game::util::set_window_icon(ImageCopy(*image));
 
