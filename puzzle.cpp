@@ -205,12 +205,10 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_rand_neighbour_of_last_piece
 void puzzle_game::puzzle::shuffle(){
     auto& pieces = current_order_of_pieces;
 
-    //if the puzzle is solved when this is called, we need to find a new last piece 
-    if(this->is_solved()) ptr_last_piece = nullptr;
 
-
+    //if there is no pointer to the last piece, or the puzzle is solved, we need to
     //define the last piece and then remove it from the current puzzle state
-    if(!ptr_last_piece){
+    if( (!ptr_last_piece) || (this->is_solved())){
         //get a random index from the pieces for the removed/last piece to be
         int chosen_hidden_piece_index = rand() % pieces.size();
         //set the pointer to the piece's address then save the index for when
@@ -219,6 +217,11 @@ void puzzle_game::puzzle::shuffle(){
         indx_last_piece = chosen_hidden_piece_index;
         //erase that chosen piece from the current state
         pieces.erase(pieces.begin()+chosen_hidden_piece_index);
+
+        //there should only be *ONE* piece erased from the current order vector.
+        //there is NO REASON THIS SHOULD EVER FAIL.
+        assert( (correct_order_of_pieces.size() - current_order_of_pieces.size()) == 1);
+
     }
 
     //pick a random neighbor of the last piece than swap them, to shuffle
