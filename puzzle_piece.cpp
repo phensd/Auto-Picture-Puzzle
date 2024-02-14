@@ -38,3 +38,7 @@ puzzle_game::puzzle_piece::puzzle_piece(Vector2 pos, Texture2D img,Rectangle bou
 bool puzzle_game::puzzle_piece::operator==(const puzzle_piece& p){
     return Vector2Equals(this->pos,p.pos);
 }
+
+bool puzzle_game::puzzle_piece::operator!=(const puzzle_piece& p){
+    return !(puzzle_piece::operator==(p));
+}

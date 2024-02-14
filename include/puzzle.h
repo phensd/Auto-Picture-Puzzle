@@ -36,6 +36,8 @@ namespace puzzle_game {
             const int MIN_DIVISOR{4};
             const int MAX_DIVISOR{8};
             puzzle_piece* ptr_last_piece{nullptr};
+            int indx_last_piece;
+
             puzzle_piece* ptr_piece_at(std::vector<puzzle_piece>& list,const Vector2& pos);
 
             puzzle_piece* ptr_piece_below(const puzzle_piece* piece);

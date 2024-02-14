@@ -10,7 +10,8 @@
 #include "include/constants.h"
 #include <cmath>
 #include "include/util.h"
-
+#include <format>
+#include <cassert>
 
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_above(const puzzle_piece* piece){
     return ptr_piece_at(current_order_of_pieces,Vector2{piece->pos.x,piece->pos.y-piece->bounding_box.height});
@@ -42,7 +43,7 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_at(std::vector<puzzle_
 
 
 bool puzzle_game::puzzle::is_filled_in_after_completion(){
-    return std::find(current_order_of_pieces.begin(),current_order_of_pieces.end(),*ptr_last_piece) != current_order_of_pieces.end();
+    return (std::find(current_order_of_pieces.begin(),current_order_of_pieces.end(),*ptr_last_piece) != current_order_of_pieces.end());
 }
 
 
@@ -61,8 +62,13 @@ void puzzle_game::puzzle::handle_mouse_clicks(const Vector2& mouse_pos){
                     p.swap(ptr_last_piece);
 
                     //check if the puzzle is solved, if it is, fill in the last piece
-                    if(this->is_solved()) {
-                        current_order_of_pieces.push_back(*ptr_last_piece);
+                    if(this->is_solved() && (!(this->is_filled_in_after_completion()))) {
+
+                        //add in the last piece into its original index, so the order doesnt get messed up for
+                        //later solve checks.
+                        current_order_of_pieces.insert(current_order_of_pieces.begin()+indx_last_piece,*ptr_last_piece);
+
+                        
                     }
                 }
             }
@@ -83,20 +89,49 @@ void puzzle_game::puzzle::handle_mouse_hover(const Vector2& mouse_pos){
 }
 
 bool puzzle_game::puzzle::is_solved(){
+
+    //if the size of both vectors are the same, the puzzle is solved. 
+    if((current_order_of_pieces.size() == correct_order_of_pieces.size())) return true;
+
     //ocompare is used to jump comparison ahead so last piece in correct list
     //isnt compared with anything in current list
-    int ocompare {0};
+    int compare_offset {0};
+    std::cout << "COMPARE PIECES \n";
+
 
     for(int i = 0; i < current_order_of_pieces.size(); ++i){
 
-        //Don't compare the last piece ptr to anything in the current order, skip over it
-        if(correct_order_of_pieces[ocompare] == *ptr_last_piece) ++ocompare;
+        std::cerr << "i = " << i << " compare_offset = " << compare_offset << "\n";
 
-        //If any of the pieces don't match (ignoring the last piece as mentioned above), the puzzle isn't finished
-        if(! (current_order_of_pieces[i] == correct_order_of_pieces[ocompare]) ) return false;
+        {
+            std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
+            std::string message_correct {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
 
-        ++ocompare;
-    }
+            std::cerr << "current order (" << i << ") " << message_current << " correct order (" << compare_offset << ") "<< message_correct<< "\n";
+        }
+
+        if(correct_order_of_pieces[i] == *ptr_last_piece) {
+            compare_offset++;
+            std::string message_correct_wooffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[i].pos.x,correct_order_of_pieces[i].pos.y)};
+            std::cerr << "found correct piece - offset corrected (" << compare_offset << ")." << '\n';
+            std::cerr << "Correct piece is " << message_correct_wooffset << '\n';
+            std::string message_correct_woffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+            std::cerr << "Next comparison rhs should be " << message_correct_woffset << '\n';
+        }
+
+        if(current_order_of_pieces[i] != correct_order_of_pieces[compare_offset]) {
+            std::cerr << "inequal - ";
+            std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
+            std::string message_correct {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+            std::cerr << "current order (" << i << ") " << message_current << " correct order (" << compare_offset << ") "<< message_correct<< "\n";
+            std::cerr << "Not solved.";
+            return false;
+        }
+
+        compare_offset++;
+
+    }  
+    std::cerr << "Solved!";
     return true;
 }
 
@@ -121,8 +156,6 @@ void puzzle_game::puzzle::draw(){
         //if the puzzle isnt solved, draw a soft border around each piece
         if(!is_filled_in_after_completion()){
             DrawRectangleLinesEx(Rectangle{p.pos.x,p.pos.y,static_cast<float>(p.img.width),static_cast<float>(p.img.height)},puzzle_game::constants::PUZZLE_PIECE_BORDER_THICKNESS,BLACK);
-
-
         }
     }
 
@@ -166,17 +199,21 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_rand_neighbour_of_last_piece
 void puzzle_game::puzzle::shuffle(){
     auto& pieces = current_order_of_pieces;
 
+    //if the puzzle is solved when this is called, find a new last piece 
+    if(this->is_solved()) ptr_last_piece = nullptr;
+
 
     //define the last piece and then remove it from the current puzzle state
     if(!ptr_last_piece){
         int chosen_hidden_piece_index = rand() % pieces.size();
         ptr_last_piece = &correct_order_of_pieces[chosen_hidden_piece_index];
+        indx_last_piece = chosen_hidden_piece_index;
         pieces.erase(pieces.begin()+chosen_hidden_piece_index);
     }
 
     //pick a random neighbor of the last piece than swap them, to shuffle
     auto size = pieces.size();
-    for(int i = 0; i < static_cast<int>(size*size); ++i){
+    for(int i = 0; i < static_cast<int>(1); ++i){
       ptr_last_piece->swap(ptr_rand_neighbour_of_last_piece());
 
     }
@@ -279,6 +316,7 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
     list.reserve(static_cast<size_t>(current_divisor*current_divisor));
 
 
+    //Divide the image into indiviual puzzle pieces
     for(int y = 0; y < divisor; ++y){
         for(int x = 0; x < divisor; ++x){
 

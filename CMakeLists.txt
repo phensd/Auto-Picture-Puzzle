@@ -16,4 +16,4 @@ set(CMAKE_CXX_FLAGS_DEBUG "-ggdb")
 set(CMAKE_CXX_FLAGS_RELEASE "-O1 -s")
 
 
-set_property(TARGET PicturePuzzle PROPERTY CMAKE_CXX_STANDARD 20)
+set_property(TARGET PicturePuzzle PROPERTY CXX_STANDARD 20)
