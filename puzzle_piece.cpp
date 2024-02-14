@@ -14,6 +14,10 @@ void puzzle_game::puzzle_piece::move(Vector2& pos){
 
 //swap positions of two pieces
 void puzzle_game::puzzle_piece::swap(puzzle_piece* with){
+
+    //dont swap with itself
+    if(this == with) return;
+
     auto temp_pos = with->pos;
 
     with->move(pos);

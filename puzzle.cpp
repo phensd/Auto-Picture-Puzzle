@@ -90,19 +90,18 @@ void puzzle_game::puzzle::handle_mouse_hover(const Vector2& mouse_pos){
 
 bool puzzle_game::puzzle::is_solved(){
 
-    //if the size of both vectors are the same, the puzzle is solved. 
+    //if the size of both vectors are the same, the puzzle should be solved.
     if((current_order_of_pieces.size() == correct_order_of_pieces.size())) return true;
 
     //ocompare is used to jump comparison ahead so last piece in correct list
     //isnt compared with anything in current list
     int compare_offset {0};
+
+
     std::cout << "COMPARE PIECES \n";
-
-
     for(int i = 0; i < current_order_of_pieces.size(); ++i){
 
         std::cerr << "i = " << i << " compare_offset = " << compare_offset << "\n";
-
         {
             std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
             std::string message_correct {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
@@ -110,15 +109,22 @@ bool puzzle_game::puzzle::is_solved(){
             std::cerr << "current order (" << i << ") " << message_current << " correct order (" << compare_offset << ") "<< message_correct<< "\n";
         }
 
+        //if the current index is the last piece pointer, 
+        //increment the compare offset so we dont compare it to anything in the current order.
         if(correct_order_of_pieces[i] == *ptr_last_piece) {
+
             compare_offset++;
+
+            //without offset (wooffset) with offset (woffset)
             std::string message_correct_wooffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[i].pos.x,correct_order_of_pieces[i].pos.y)};
+            std::string message_correct_woffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+
             std::cerr << "found correct piece - offset corrected (" << compare_offset << ")." << '\n';
             std::cerr << "Correct piece is " << message_correct_wooffset << '\n';
-            std::string message_correct_woffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
             std::cerr << "Next comparison rhs should be " << message_correct_woffset << '\n';
         }
 
+        //if the index at the current order doesnt compare to the index (compare offset) of the correct order, the puzzle isnt solvd.
         if(current_order_of_pieces[i] != correct_order_of_pieces[compare_offset]) {
             std::cerr << "inequal - ";
             std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
@@ -131,7 +137,7 @@ bool puzzle_game::puzzle::is_solved(){
         compare_offset++;
 
     }  
-    std::cerr << "Solved!";
+    std::cerr << "Solved! \n";
     return true;
 }
 
@@ -199,15 +205,19 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_rand_neighbour_of_last_piece
 void puzzle_game::puzzle::shuffle(){
     auto& pieces = current_order_of_pieces;
 
-    //if the puzzle is solved when this is called, find a new last piece 
+    //if the puzzle is solved when this is called, we need to find a new last piece 
     if(this->is_solved()) ptr_last_piece = nullptr;
 
 
     //define the last piece and then remove it from the current puzzle state
     if(!ptr_last_piece){
+        //get a random index from the pieces for the removed/last piece to be
         int chosen_hidden_piece_index = rand() % pieces.size();
+        //set the pointer to the piece's address then save the index for when
+        //it will be re-inserted into the current puzzle state after it is solved
         ptr_last_piece = &correct_order_of_pieces[chosen_hidden_piece_index];
         indx_last_piece = chosen_hidden_piece_index;
+        //erase that chosen piece from the current state
         pieces.erase(pieces.begin()+chosen_hidden_piece_index);
     }
 
