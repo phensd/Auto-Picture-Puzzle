@@ -48,7 +48,7 @@ namespace puzzle_game::util{
         title += " ";
 
         if(include_info){
-            std::string info_string {"[F4] Increase Difficulty | [Spacebar] Scramble Puzzle | [CTRL] Preview Image"};
+            std::string info_string {std::format("[F4] Increase Difficulty | [Spacebar] Scramble Puzzle | [CTRL] Preview Image | FPS:{0}",GetFPS())};
             title += info_string;
         }
 

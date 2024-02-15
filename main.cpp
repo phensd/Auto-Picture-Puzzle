@@ -73,10 +73,12 @@ void update_window_title(puzzle_game::puzzle* puzzle){
 
 int main(int argc, [[maybe_unused]]char* argv[]){
 
+    SetConfigFlags(FLAG_VSYNC_HINT);
+
+    //message to be shown if the program is opened without a picture passed in args
     std::string middle_message{"Drag and drop and image here to start!"};
 
     InitWindow(800,800,"[Auto Picture Puzzle]");
-    SetTargetFPS(144);
 
     puzzle_game::puzzle puzzle{};
 
@@ -94,6 +96,7 @@ int main(int argc, [[maybe_unused]]char* argv[]){
 
 
     while (!WindowShouldClose()){
+
 
         //if a file is dropped, load the files,
         //pass it into handle_image_change,
