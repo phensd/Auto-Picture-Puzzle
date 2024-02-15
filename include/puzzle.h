@@ -12,7 +12,8 @@ namespace puzzle_game {
             Image img;
             Image modif_img;
             Texture modif_img_as_texture;
-            std::vector<puzzle_piece>& get_pieces();
+            // std::vector<puzzle_piece>& get_pieces();
+            
             void init();
             void set_image(Image* image, std::string file_path_for_title);
             void reset();

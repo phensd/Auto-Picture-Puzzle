@@ -43,7 +43,7 @@ void handle_image_change(puzzle_game::puzzle& puzzle, FilePathList* files=nullpt
         file_path_for_title = from_path;
 
     //if a file path list was passed
-    //(i.e called from a dragg-and-drop)
+    //(i.e called from a drag-and-drop)
     //try to load it from a drag-and-dropped file.
     }else if(files){
         image = LoadImage(files->paths[0]);
@@ -117,14 +117,14 @@ int main(int argc, [[maybe_unused]]char* argv[]){
             puzzle.update();
             update_window_title(&puzzle);
             //Gray is less common for what I assume people would use this for
-            //so we clear with gray here, but
+            //so we clear with gray here.
             ClearBackground(GRAY);
 
         //otherwise draw a message in the middle of the screen
         //telling the user to drop an image into the window
         }else {
             DrawText(middle_message.c_str(),30,335,38,BLACK);
-            //white here because its better for the text.
+            //clear with white here because its better for the text.
             ClearBackground(WHITE);
         }
         EndDrawing();

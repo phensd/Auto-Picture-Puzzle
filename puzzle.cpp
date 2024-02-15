@@ -13,6 +13,8 @@
 #include <format>
 #include <cassert>
 
+
+//functions for grabbing piece pointers based on location
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_above(const puzzle_piece* piece){
     return ptr_piece_at(current_order_of_pieces,Vector2{piece->pos.x,piece->pos.y-piece->bounding_box.height});
 }
@@ -30,8 +32,7 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_right(const puzzle_pie
 }
 
 
-
-
+//function for grabbing a piece pointer
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_at(std::vector<puzzle_piece>& list,const Vector2& pos){
     for(auto& p : list){
         if(p.pos.x == pos.x and p.pos.y == pos.y){
@@ -41,24 +42,38 @@ puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_piece_at(std::vector<puzzle_
     return nullptr;
 }
 
+//function for gettting all the neighbours of the last piece
+//this *can* return nullptrs
+std::vector<puzzle_game::puzzle_piece*> puzzle_game::puzzle::neighbours_of_last_piece(){
+    std::vector<puzzle_piece*> neighbours {
+        ptr_piece_above(ptr_last_piece),
+        ptr_piece_below(ptr_last_piece),
+        ptr_piece_right(ptr_last_piece),
+        ptr_piece_left(ptr_last_piece),
+    };
+    return neighbours;
+}
 
+//checks if the current puzzle state contains the last piece
 bool puzzle_game::puzzle::is_filled_in_after_completion(){
     return (std::find(current_order_of_pieces.begin(),current_order_of_pieces.end(),*ptr_last_piece) != current_order_of_pieces.end());
 }
 
-
-//too nested ughhhh
 void puzzle_game::puzzle::handle_mouse_clicks(const Vector2& mouse_pos){
 
     //not clicked, return
     if(!IsMouseButtonPressed(0)) return;
 
+    //loop through pieces
     for(auto& p : current_order_of_pieces){
+        //if a piece was clicked...
         if(CheckCollisionPointRec(mouse_pos,p.bounding_box)){
+            //search neighbours of the empty piece (the last piece)
             for(auto &ptr : neighbours_of_last_piece()){
                 //if the piece clicked is a neighbour of the empty slot
                 //it can be moved there
                 if(ptr == &p){
+                    //swap the empty slot and the piece
                     p.swap(ptr_last_piece);
 
                     //check if the puzzle is solved, if it is, fill in the last piece
@@ -90,10 +105,10 @@ void puzzle_game::puzzle::handle_mouse_hover(const Vector2& mouse_pos){
 
 bool puzzle_game::puzzle::is_solved(){
 
-    //if the size of both vectors are the same, the puzzle should be solved.
-    if((current_order_of_pieces.size() == correct_order_of_pieces.size())) return true;
+    //if the current puzzle state is all the way filled in, it is solved. return early
+    if(is_filled_in_after_completion()) return true;
 
-    //ocompare is used to jump comparison ahead so last piece in correct list
+    //compare_offset is used to jump comparison ahead so last piece in correct list
     //isnt compared with anything in current list
     int compare_offset {0};
 
@@ -101,6 +116,7 @@ bool puzzle_game::puzzle::is_solved(){
     std::cout << "COMPARE PIECES \n";
     for(int i = 0; i < current_order_of_pieces.size(); ++i){
 
+        //console logging
         std::cerr << "i = (" << i << ") compare_offset = (" << compare_offset << ")\n";
         {
             std::string message_current {std::format("POS X:({0}) Y:({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
@@ -134,9 +150,11 @@ bool puzzle_game::puzzle::is_solved(){
             return false;
         }
 
+        //increment the correct-order-of-pieces comparison offset to keep up with 'i'
         compare_offset++;
 
-    }  
+    } 
+    //if we got here, then the puzzle is solved. 
     std::cerr << "Solved! \n";
     return true;
 }
@@ -172,24 +190,12 @@ void puzzle_game::puzzle::draw(){
 
 }
 
-std::vector<puzzle_game::puzzle_piece>& puzzle_game::puzzle::get_pieces(){
-    return current_order_of_pieces;
-}
+//I havent used this function yet, dont think I will, but no harm in leaving it commented out for now
+// std::vector<puzzle_game::puzzle_piece>& puzzle_game::puzzle::get_pieces(){
+//     return current_order_of_pieces;
+// }
 
 
-std::vector<puzzle_game::puzzle_piece*> puzzle_game::puzzle::neighbours_of_last_piece(){
-    std::vector<puzzle_piece*> neighbours {
-        ptr_piece_above(ptr_last_piece),
-        ptr_piece_below(ptr_last_piece),
-        ptr_piece_right(ptr_last_piece),
-        ptr_piece_left(ptr_last_piece),
-    };
-
-
-    return neighbours;
-
-
-}
 
 
 //used to scramble puzzle
@@ -225,13 +231,13 @@ void puzzle_game::puzzle::shuffle(){
     }
 
 
-    //pick a random neighbor of the last piece, then swap them.
+    //pick a random neighbour of the last piece, then swap them.
     //if the puzzle somehow solves itself in this process, do it again
     auto size = pieces.size();
     auto do_shuffle = [this,&size](puzzle_piece* last_piece){
 
         auto shuffle = [this,&size](puzzle_piece* last_piece) -> bool{
-            for(int i = 0; i < static_cast<int>(size*size); ++i){
+            for(int i = 0; i < static_cast<int>(1); ++i){
                 last_piece->swap(this->ptr_rand_neighbour_of_last_piece());
             }
 
@@ -285,6 +291,7 @@ void puzzle_game::puzzle::set_image(Image* image,std::string file_path_for_title
     //This wont count for the slight precision loss like the pieces(?) but it should be good enough and not noticeable (I hope?)
     modif_img_as_texture = LoadTextureFromImage(modif_img);
 
+    //I plan on getting around to creating a simple icon for the window instead, because I dont like this
     //puzzle_game::util::set_window_icon(ImageCopy(*image));
 
     //Reset the puzzle
@@ -339,8 +346,8 @@ void puzzle_game::puzzle::reset(){
 }
 
 
+//Divides modif_img into individual pieces based on the current_divisor
 void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_piece>& list){
-
 
     int& divisor {current_divisor};
 
@@ -348,7 +355,7 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
     list.reserve(static_cast<size_t>(current_divisor*current_divisor));
 
 
-    //Divide the image into indiviual puzzle pieces
+    //Divide the image into individual puzzle pieces
     for(int y = 0; y < divisor; ++y){
         for(int x = 0; x < divisor; ++x){
 
@@ -364,12 +371,13 @@ void puzzle_game::puzzle::fill_list_with_pieces(std::vector<puzzle_game::puzzle_
             //the cropped image to be loaded into the puzzle piece
             Image cropped_img {ImageFromImage(modif_img,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y})};
 
+            //above, but as a texture.
             Texture2D puzzle_piece_img {LoadTextureFromImage(cropped_img)};
 
             //Unload the cropped image since it is no longer needed
             UnloadImage(cropped_img);
             
-
+            //add the piece to the list
             list.emplace_back(pos,puzzle_piece_img,Rectangle{pos.x,pos.y,dimensions.x,dimensions.y});
             
 
