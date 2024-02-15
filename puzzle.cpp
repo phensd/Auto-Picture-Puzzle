@@ -224,14 +224,33 @@ void puzzle_game::puzzle::shuffle(){
 
     }
 
-    //pick a random neighbor of the last piece than swap them, to shuffle
-    auto size = pieces.size();
-    for(int i = 0; i < static_cast<int>(1); ++i){
-      ptr_last_piece->swap(ptr_rand_neighbour_of_last_piece());
 
-    }
+    //pick a random neighbor of the last piece, then swap them.
+    //if the puzzle somehow solves itself in this process, do it again
+    auto size = pieces.size();
+    auto do_shuffle = [this,&size](puzzle_piece* last_piece){
+
+        auto shuffle = [this,&size](puzzle_piece* last_piece) -> bool{
+            for(int i = 0; i < static_cast<int>(size*size); ++i){
+                last_piece->swap(this->ptr_rand_neighbour_of_last_piece());
+            }
+
+            return this->is_solved();
+        };
+
+        //shuffle returns false if the puzzle is solved after shuffling
+        //so we do it over and over until it returns true
+        while(shuffle(last_piece)){
+            shuffle(last_piece);
+        }
+    };
+
+    //call the shuffle func
+    do_shuffle(ptr_last_piece);
+
 
 }
+
 
 void puzzle_game::puzzle::set_image(Image* image,std::string file_path_for_title){
 
