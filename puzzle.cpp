@@ -101,10 +101,10 @@ bool puzzle_game::puzzle::is_solved(){
     std::cout << "COMPARE PIECES \n";
     for(int i = 0; i < current_order_of_pieces.size(); ++i){
 
-        std::cerr << "i = " << i << " compare_offset = " << compare_offset << "\n";
+        std::cerr << "i = (" << i << ") compare_offset = (" << compare_offset << ")\n";
         {
-            std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
-            std::string message_correct {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+            std::string message_current {std::format("POS X:({0}) Y:({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
+            std::string message_correct {std::format("POS X:({0}) Y:({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
 
             std::cerr << "current order (" << i << ") " << message_current << " correct order (" << compare_offset << ") "<< message_correct<< "\n";
         }
@@ -116,21 +116,21 @@ bool puzzle_game::puzzle::is_solved(){
             compare_offset++;
 
             //without offset (wooffset) with offset (woffset)
-            std::string message_correct_wooffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[i].pos.x,correct_order_of_pieces[i].pos.y)};
-            std::string message_correct_woffset {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+            std::string message_correct_wooffset {std::format("POS X:({0}) Y:({1})",correct_order_of_pieces[i].pos.x,correct_order_of_pieces[i].pos.y)};
+            std::string message_correct_woffset {std::format("POS X:({0}) Y:({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
 
             std::cerr << "found correct piece - offset corrected (" << compare_offset << ")." << '\n';
             std::cerr << "Correct piece is " << message_correct_wooffset << '\n';
             std::cerr << "Next comparison rhs should be " << message_correct_woffset << '\n';
         }
 
-        //if the index at the current order doesnt compare to the index (compare offset) of the correct order, the puzzle isnt solvd.
+        //if the index at the current order doesnt compare to the index (compare offset) of the correct order, the puzzle isnt solved.
         if(current_order_of_pieces[i] != correct_order_of_pieces[compare_offset]) {
             std::cerr << "inequal - ";
-            std::string message_current {std::format("POS X:({0}) Y({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
-            std::string message_correct {std::format("POS X:({0}) Y({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
+            std::string message_current {std::format("POS X:({0}) Y:({1})",current_order_of_pieces[i].pos.x,current_order_of_pieces[i].pos.y)};
+            std::string message_correct {std::format("POS X:({0}) Y:({1})",correct_order_of_pieces[compare_offset].pos.x,correct_order_of_pieces[compare_offset].pos.y)};
             std::cerr << "current order (" << i << ") " << message_current << " correct order (" << compare_offset << ") "<< message_correct<< "\n";
-            std::cerr << "Not solved.";
+            std::cerr << "Not solved. \n";
             return false;
         }
 

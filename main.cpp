@@ -120,7 +120,7 @@ int main(int argc, [[maybe_unused]]char* argv[]){
         //otherwise draw a message in the middle of the screen
         //telling the user to drop an image into the window
         }else {
-            DrawText(middle_message.c_str(),30,330,38,BLACK);
+            DrawText(middle_message.c_str(),30,335,38,BLACK);
             //white here because its better for the text.
             ClearBackground(WHITE);
         }
