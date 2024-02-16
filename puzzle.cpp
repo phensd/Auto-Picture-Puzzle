@@ -196,8 +196,6 @@ void puzzle_game::puzzle::draw(){
 // }
 
 
-
-
 //used to scramble puzzle
 puzzle_game::puzzle_piece* puzzle_game::puzzle::ptr_rand_neighbour_of_last_piece(){
     puzzle_piece* choice = nullptr;
@@ -237,7 +235,7 @@ void puzzle_game::puzzle::shuffle(){
     auto do_shuffle = [this,&size](puzzle_piece* last_piece){
 
         auto shuffle = [this,&size](puzzle_piece* last_piece) -> bool{
-            for(int i = 0; i < static_cast<int>(1); ++i){
+            for(int i = 0; i < static_cast<int>(size*size); ++i){
                 last_piece->swap(this->ptr_rand_neighbour_of_last_piece());
             }
 
