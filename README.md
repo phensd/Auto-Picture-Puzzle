@@ -18,12 +18,13 @@ Clicking the pieces will slide them around. Pressing `F4` will increase the diff
 
 # Images 
 
-![img5](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/98f73138-f083-439a-a1de-ecf200b56d06)
-![img3](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/69df4a65-33c8-4d16-b392-913c8542b63f)
-![img1](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/6c020759-cb4d-4df8-994e-92491ea28858)
-![img2](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ea406437-c9d3-484a-af4f-8831cc29c265)
-![img4](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ee9f366c-55d7-4b77-b10f-5e49549aec14)
-![img6](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/e9b69687-a1f8-4f29-bc8a-fd680de5bc39)
+![A show of an 8x8 house next to a mountain with a lake image](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/98f73138-f083-439a-a1de-ecf200b56d06)
+![A show of an 4x4 Polynesian island with a boat and the sea image](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/69df4a65-33c8-4d16-b392-913c8542b63f)
+![A show of an 6x6 trees on some rocks in a lake surrounded by a forrest with thunder image](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/6c020759-cb4d-4df8-994e-92491ea28858)
+![A show of an 4x4 close up drop of water hitting the water surface image](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ea406437-c9d3-484a-af4f-8831cc29c265)
+![A show of an 8x8 blue rose image](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ee9f366c-55d7-4b77-b10f-5e49549aec14)
+<!--![img6](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/e9b69687-a1f8-4f29-bc8a-fd680de5bc39)-->
+<img src="https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/e9b69687-a1f8-4f29-bc8a-fd680de5bc39" alt="insert image screen" width="1280"/>
 
 
 
