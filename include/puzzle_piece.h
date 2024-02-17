@@ -3,7 +3,7 @@
 #include <utility>
 
 namespace puzzle_game {
-    struct puzzle_piece{
+    class puzzle_piece{
 
         public:
             Vector2 pos;
@@ -19,10 +19,5 @@ namespace puzzle_game {
 
             puzzle_piece(Vector2 pos, Texture2D img,Rectangle bounding_box);
             ~puzzle_piece();
-
-
-
-
-
     };    
 }

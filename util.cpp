@@ -36,8 +36,12 @@ namespace puzzle_game::util{
         UnloadImage(image);
     }
 
+    std::string get_difficulty_string(int difficulty){
+        return std::format("Difficulty ({0}x{0})",difficulty);
+    }
+
     //Set the window title, "include_info" adds some information about keybindings
-    void set_window_title(std::string title, bool include_info){
+    void set_window_title(std::string title, bool include_info,int difficulty){
 
         //add brackets to the first entry
         title.insert(0,"[");
@@ -48,7 +52,7 @@ namespace puzzle_game::util{
         title += " ";
 
         if(include_info){
-            std::string info_string {std::format("[F4] Increase Difficulty | [Spacebar] Scramble Puzzle | [CTRL] Preview Image | FPS:{0}",GetFPS())};
+            std::string info_string {std::format("[F4] Increase {1} | [Spacebar] Scramble Puzzle | [CTRL] Preview Image | FPS:{0}",GetFPS(),get_difficulty_string(difficulty))};
             title += info_string;
         }
 

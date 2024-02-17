@@ -5,7 +5,7 @@
 #include <string>
 
 namespace puzzle_game {
-    struct puzzle{
+    class puzzle{
 
 
         public:
@@ -35,7 +35,7 @@ namespace puzzle_game {
 
         private:
             const int MIN_DIVISOR{4};
-            const int MAX_DIVISOR{8};
+            const int MAX_DIVISOR{10};
             puzzle_piece* ptr_last_piece{nullptr};
             int indx_last_piece;
 
@@ -59,15 +59,6 @@ namespace puzzle_game {
             std::vector<puzzle_piece> correct_order_of_pieces{};
             std::vector<puzzle_piece> current_order_of_pieces{};
             void fill_list_with_pieces(std::vector<puzzle_piece>& list);
-
-
-
-        
-
-
-
-
-
     };
 
 }

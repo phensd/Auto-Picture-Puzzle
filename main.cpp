@@ -64,9 +64,9 @@ void update_window_title(puzzle_game::puzzle* puzzle){
      //Set the window title to be the file name of the image loaded,
     //and some info on key bindings if the puzzle is not completed
     if(!puzzle->is_filled_in_after_completion()){
-        puzzle_game::util::set_window_title(puzzle->image_file_path_get(),true);
+        puzzle_game::util::set_window_title(puzzle->image_file_path_get(),true,puzzle->current_divisor);
     }else{
-        puzzle_game::util::set_window_title("Puzzle Solved!");
+        puzzle_game::util::set_window_title("Puzzle Solved! At " + puzzle_game::util::get_difficulty_string(puzzle->current_divisor));
 
     }
 }
