@@ -113,9 +113,43 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 
 #Compile and build
 make -j4
-
-#The program can now be run with "./PicturePuzzle".
 ```
+The program can now be run with "./PicturePuzzle".
 
 
-### Compilation (Windows)
+
+## Compilation (Windows)
+
+
+### Download W64DevKit and add it to your PATH environment variable:
+
+[Navigate to "Releases" and download the provided .zip file.](https://github.com/skeeto/w64devkit)
+
+Extract it somewhere convenient, [then add the .bin folder to your PATH environment variable in Windows.](https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows)
+
+W64DevKit allows for use of common GNU tools found on most Linux distributions through the windows command line, including a C and C++ compiler, making this process much simpler.
+
+### Download and install CMAKE:
+[CMake for windows can be found here, with a convenient installer that will automatically add CMake to your PATH variable.](https://cmake.org/download/)
+
+
+
+### Download the Raylib repo, compile the library and install it:
+
+First, [download the raylib repo and extract it somewhere accessible](https://github.com/raysan5/raylib)
+
+Then, [follow the previous instructions on how to modify the root folder's CMakeOptions.txt for this project]()
+
+
+Then, download this repo, and extract it somewhere convenient.
+
+### Open a Command Prompt with administrator privileges, then run the following commands:
+```
+cd <the path to this cloned repo>
+
+mkdir build
+
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+
+
+```
