@@ -1,4 +1,4 @@
-# Auto Picture Puzzle: <br> Create an interactive sliding picture puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
+# Auto Picture Puzzle: <br> Create an interactive sliding puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
 
  
 - Overview:
