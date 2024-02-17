@@ -136,20 +136,44 @@ W64DevKit allows for use of common GNU tools found on most Linux distributions t
 
 ### Download the Raylib repo, compile the library and install it:
 
-First, [download the raylib repo and extract it somewhere accessible](https://github.com/raysan5/raylib)
+First, [Download the raylib repo and extract it somewhere accessible](https://github.com/raysan5/raylib)
 
-Then, [follow the previous instructions on how to modify the root folder's CMakeOptions.txt for this project]()
+Then, [Follow the previous instructions on how to modify the root folder's CMakeOptions.txt for this project](#edit-cmakeoptionstxt-to-support-more-image-formats). **This step should not be skipped.**
 
-
-Then, download this repo, and extract it somewhere convenient.
-
-### Open a Command Prompt with administrator privileges, then run the following commands:
+Now, Open a Command Prompt with **administrator privileges** and run the following commands:
 ```
-cd <the path to this cloned repo>
-
+#Go to the Raylib source directory, and make a build directory, then change to it.
+cd <the path to the extracted Raylib repo>
 mkdir build
+cd build
 
+#Generate MinGW build files
+cmake -G "MinGW Makefiles" -DCUSTOMIZE_BUILD=ON -DCMAKE_BUILD_TYPE=Release ..
+
+#Make the static lib
+make -j4
+
+#Install raylib to C:\Program Files (x86)\raylib
+#This command in particular requires the command prompt to be elevated to admin.
+make install
+```
+Make sure wherever Raylib installed to [is set in your path environment variable.]((https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows))
+
+### Compile Auto Picture Puzzle:
+
+[Download this repo, and extract it somewhere easy-to-access.](https://github.com/phensd/Auto-Picture-Puzzle/archive/refs/heads/master.zip)
+
+Now, run the following commands:
+```
+cd <the path to the extracted Auto Puzzle Picture repo>
+mkdir build
+cd build
+
+#Generate MinGW build files
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
 
-
+#Build Auto Picture Puzzle
+make -j4
 ```
+The final result should be a file `PicturePuzzle.exe` in the build directory!
+
