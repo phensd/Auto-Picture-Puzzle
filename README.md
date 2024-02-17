@@ -1,13 +1,15 @@
-# Auto Picture Puzzle - Create an interactive sliding picture puzzle from any image 
+# Auto Picture Puzzle <br> Create an interactive sliding picture puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
 
-- [Compilation (Linux)](#compilation-linux)
-- [Compilation (Windows)](#compilation-windows)
+ 
+- Overview:
+  - Compilation:  
+    - [Linux](#compilation-linux)
+    - [Windows](#compilation-windows)
 
 ## Compilation (Linux)
-### Install Raylib's dependencies:
-```
+### Install Raylib's dependencies
 (Source: https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
-
+```
 #Ubuntu 
 sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev
 
@@ -16,21 +18,20 @@ sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel li
 
 #Arch Linux
 sudo pacman -S alsa-lib mesa libx11 libxrandr libxi libxcursor libxinerama
-
 ```
-### Clone the Raylib repo:
+### Clone the Raylib repo
 ```
 git clone https://github.com/raysan5/raylib.git
 ```
 
-### Edit CMakeOptions.txt to support more image formats:
-#### Then, navigate to the source folder's CMakeOptions.txt, and find the following lines:
+### Edit CMakeOptions.txt to support more image formats
+#### Then, navigate to the source folder's CMakeOptions.txt, and find the following lines
 
 <details>
 <summary> Original CMakeOptions.txt section from the Raylib repo: </summary> 
+(Source: https://github.com/raysan5/raylib/blob/master/CMakeOptions.txt)
   
 ```
-(Source: https://github.com/raysan5/raylib/blob/master/CMakeOptions.txt)
 # rtextures.c
 cmake_dependent_option(SUPPORT_IMAGE_EXPORT "Support image exporting to file" ON CUSTOMIZE_BUILD ON)
 cmake_dependent_option(SUPPORT_IMAGE_GENERATION "Support procedural image generation functionality (gradient, spot, perlin-noise, cellular)" ON CUSTOMIZE_BUILD ON)
@@ -114,14 +115,14 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 #Compile and build
 make -j4
 ```
-The program can now be run with "./PicturePuzzle".
+The program can now be run with ``./PicturePuzzle``.
 
 
 
 ## Compilation (Windows)
-
-
+**Note: I am not a windows developer. If someone would like to assist in making this simpler/more typical of a windows compilation process, feel free to contribute.**
 ### Download W64DevKit and add it to your PATH environment variable:
+
 
 [Navigate to "Releases" and download the provided .zip file.](https://github.com/skeeto/w64devkit)
 
@@ -129,21 +130,23 @@ Extract it somewhere convenient, [then add the .bin folder to your PATH environm
 
 W64DevKit allows for use of common GNU tools found on most Linux distributions through the windows command line, including a C and C++ compiler, making this process much simpler.
 
-### Download and install CMAKE:
+
+
+### Download and install CMake
 [CMake for windows can be found here, with a convenient installer that will automatically add CMake to your PATH variable.](https://cmake.org/download/)
 
 
 
-### Download the Raylib repo, compile the library and install it:
+### Download the Raylib repo, compile the library and install it
 
 First, [Download the raylib repo and extract it somewhere accessible](https://github.com/raysan5/raylib)
 
 Then, [Follow the previous instructions on how to modify the root folder's CMakeOptions.txt for this project](#edit-cmakeoptionstxt-to-support-more-image-formats). **This step should not be skipped.**
 
-Now, Open a Command Prompt with **administrator privileges** and run the following commands:
+Now, Open a Command Prompt with **administrator privileges** and run the following commands
 ```
 #Go to the Raylib source directory, and make a build directory, then change to it.
-cd <the path to the extracted Raylib repo>
+cd <the path to the extracted Raylib source>
 mkdir build
 cd build
 
@@ -157,15 +160,16 @@ make -j4
 #This command in particular requires the command prompt to be elevated to admin.
 make install
 ```
-Make sure wherever Raylib installed to [is set in your path environment variable.]((https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows))
+Make sure wherever Raylib installed to [is set in your PATH environment variable.](https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows) *It should be in C:\Program Files (x86)\Raylib\\*
 
-### Compile Auto Picture Puzzle:
+
+### Compile Auto Picture Puzzle
 
 [Download this repo, and extract it somewhere easy-to-access.](https://github.com/phensd/Auto-Picture-Puzzle/archive/refs/heads/master.zip)
 
 Now, run the following commands:
 ```
-cd <the path to the extracted Auto Puzzle Picture repo>
+cd <the path to the extracted Auto Puzzle Picture source>
 mkdir build
 cd build
 
