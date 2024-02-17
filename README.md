@@ -1,10 +1,37 @@
-# Auto Picture Puzzle <br> Create an interactive sliding picture puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
+# Auto Picture Puzzle: <br> Create an interactive sliding picture puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
 
  
 - Overview:
-  - Compilation:  
-    - [Linux](#compilation-linux)
-    - [Windows](#compilation-windows)
+  - [Use](#use) 
+  - [Images](#images)
+- Compilation:  
+  - [Linux](#compilation-linux)
+  - [Windows](#compilation-windows)
+
+
+# Use
+Simply drag and drop an image into the executable (or pass it from the command line!) or drag it into the window to create an interactive sliding puzzle.
+
+Clicking the pieces will slide them around. Pressing `F4` will increase the difficulty (division) of the puzzle, `Spacebar` will scramble it, and holding `Control` will show a preview of the image you are trying to unscramble. <br> <br>
+[See images below.](#images)
+
+
+# Images 
+
+![img5](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/98f73138-f083-439a-a1de-ecf200b56d06)
+![img3](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/69df4a65-33c8-4d16-b392-913c8542b63f)
+![img1](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/6c020759-cb4d-4df8-994e-92491ea28858)
+![img2](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ea406437-c9d3-484a-af4f-8831cc29c265)
+![img4](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/ee9f366c-55d7-4b77-b10f-5e49549aec14)
+![img6](https://github.com/phensd/Auto-Picture-Puzzle/assets/67442165/e9b69687-a1f8-4f29-bc8a-fd680de5bc39)
+
+
+
+[Screenshots courtesy of ilayosu.](https://github.com/ilayosu) <br>
+[Images taken from pixabay.](https://pixabay.com/service/license-summary/)
+
+
+
 
 ## Compilation (Linux)
 ### Install Raylib's dependencies
@@ -25,7 +52,7 @@ git clone https://github.com/raysan5/raylib.git
 ```
 
 ### Edit CMakeOptions.txt to support more image formats
-#### Then, navigate to the source folder's CMakeOptions.txt, and find the following lines
+#### Navigate to the source folder's CMakeOptions.txt, and find the following lines
 
 <details>
 <summary> Original CMakeOptions.txt section from the Raylib repo: </summary> 
@@ -86,11 +113,13 @@ cmake_dependent_option(SUPPORT_FILEFORMAT_SVG "Support loading SVG as textures" 
 
 ### Build and install Raylib
 ```
-#Generate the build files
+cd <raylib source folder>
 
+#Create a build directory and navigate to it
 mkdir build
 cd build
 
+#Generate the build files
 #This will build a *static* library.
 cmake -DCUSTOMIZE_BUILD=ON -DCMAKE_BUILD_TYPE=Release ..
 
@@ -103,9 +132,11 @@ sudo make install
 
 ### Clone this repo, and build it
 ```
-#Clone the repo, create a build directory
+#Clone the repo
 git clone https://github.com/phensd/Auto-Picture-Puzzle.git
 cd Auto-Picture-Puzzle-master
+
+#Create a build directory, navigate to it
 mkdir build
 cd build
 
@@ -121,12 +152,12 @@ The program can now be run with ``./PicturePuzzle``.
 
 ## Compilation (Windows)
 **Note: I am not a windows developer. If someone would like to assist in making this simpler/more typical of a windows compilation process, feel free to contribute.**
-### Download W64DevKit and add it to your PATH environment variable:
+### Download W64DevKit and add it to your PATH environment variable
 
 
 [Navigate to "Releases" and download the provided .zip file.](https://github.com/skeeto/w64devkit)
 
-Extract it somewhere convenient, [then add the .bin folder to your PATH environment variable in Windows.](https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows)
+Extract it somewhere convenient, [then add it's `bin` folder to your PATH environment variable in Windows.](https://www.mathworks.com/matlabcentral/answers/94933-how-do-i-edit-my-system-path-in-windows)
 
 W64DevKit allows for use of common GNU tools found on most Linux distributions through the windows command line, including a C and C++ compiler, making this process much simpler.
 
@@ -145,7 +176,7 @@ Then, [Follow the previous instructions on how to modify the root folder's CMake
 
 Now, Open a Command Prompt with **administrator privileges** and run the following commands
 ```
-#Go to the Raylib source directory, and make a build directory, then change to it.
+#Go to the Raylib source directory, and make a build directory, then navigate to it.
 cd <the path to the extracted Raylib source>
 mkdir build
 cd build
@@ -167,7 +198,7 @@ Make sure wherever Raylib installed to [is set in your PATH environment variable
 
 [Download this repo, and extract it somewhere easy-to-access.](https://github.com/phensd/Auto-Picture-Puzzle/archive/refs/heads/master.zip)
 
-Now, run the following commands:
+Now, run the following commands
 ```
 cd <the path to the extracted Auto Puzzle Picture source>
 mkdir build
