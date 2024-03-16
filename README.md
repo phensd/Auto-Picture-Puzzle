@@ -1,4 +1,4 @@
-# Auto Picture Puzzle: <br> Written in C++ with [Raylib](https://www.raylib.com/)
+# Auto Picture Puzzle <br>
 
  
 - Overview:
