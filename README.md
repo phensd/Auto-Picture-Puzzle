@@ -1,4 +1,4 @@
-# Auto Picture Puzzle: <br> Create an interactive sliding puzzle from any image. <br> Written in C++ with [Raylib](https://www.raylib.com/).
+# Auto Picture Puzzle: <br> Written in C++ with [Raylib](https://www.raylib.com/)
 
  
 - Overview:
@@ -213,3 +213,4 @@ make -j4
 ```
 The final result should be a file `PicturePuzzle.exe` in the build directory!
 
+(Note: I am now painfully aware that this whole process can be simplified by writing the CMake file differently. I am getting around to it)
